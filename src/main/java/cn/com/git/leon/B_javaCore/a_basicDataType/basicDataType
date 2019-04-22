@@ -1,0 +1,14 @@
+https://www.cnblogs.com/wdfordream/p/10237516.html
+计算机中用补码表示
+正数原码反码补码一致
+负数补码 = 原码 除符号位 取反+1
+已知负数补码求原码 = 负数补码除符号位取反 + 1
+
+boolean 4bit 1/2byte 布尔数组 1bit
+byte   1字节 8bit
+short  2字节
+int    4字节 32bit 范围 -2^31 - 2^31-1
+long   8字节 64bit
+float  4字节 32bit
+double 8字节 64bit
+char   2字节

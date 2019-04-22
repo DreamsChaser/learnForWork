@@ -1,0 +1,22 @@
+将堆中对象划分为 年轻代 老年代
+年轻代有一个eden区和两个survivor区，默认8:1:1
+堆
+        eden                      from survivor   to survivor
+         8                       |     1        |     1       |
+
+新创建的对象都会被分配到Eden区,Eden区满后进行第一次Minor GC
+GC后会将eden区的存活(可达性分析)的对象存放在from survivor区中
+下一次minor GC会把eden区存活的对象和from survivor区中存活的对象转移到to survivor区中
+之后 from survivor 和to survivor 角色互换。等待下一次gc
+而在survivor移动过程达到一定次数（-XX:MaxTenuringThreshold,每转移一次，次数+1）后进入老年区
+同时如果在Survivor空间中相同年龄所有对象对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代，
+当Minor GC时，新生代存活的对象大于Survivor的大小时，这时一个Survivor装不下它们，那么它们就会进入老年代。
+老年区满后执行full gc(也称Major gc)
+
+可达性分析发
+从gc roots出发(引用),看引用和对象间是否存在引用链
+gc roots:
+虚拟机栈中引用的对象；
+方法区中类静态属性引用的对象；
+方法区中的常量引用的对象；
+本地方法栈中JNI（即一般说的Native方法）的引用的对象；

@@ -1,0 +1,18 @@
+equals和==
+equals比较的数值 ==比较内存地址
+基本数据类型和其包装类型用==比较，包装类型会自动拆箱成基本数据类型
+
+
+hash
+为什么选择hash存储而不是直接用数组存储
+通常根据hashCode%length 来确定位置
+假设内存中有十个地址
+如果我随即存取 那么我最坏的情况下 得从头到尾遍历，
+如果我通过hashCode%length直接得到索引位置
+
+1、覆盖hashCode没有覆盖equals
+java规定两个equals相等的两个对象 他们的hashCode一定要相等
+因为例如在集合hashSet中通过hashCode定位位置
+如果几个相同的对象有不同的hashCode值意味着在 hashSet中不一样的位置的值相同这与hashSet唯一性违背了
+2、覆盖equals而没有覆盖hashCode
+会使hash碰撞的几率提升 影响性能

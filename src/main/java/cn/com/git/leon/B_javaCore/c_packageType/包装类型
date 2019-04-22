@@ -1,0 +1,6 @@
+java中Object是所有类的父类，而八种基本数据类型不是 所以要有他们的包装类型
+
+装箱调用 包装器的valueOf 拆箱通过调用包装器的 xxxValue
+
+Byte、Short、Integer、Long、Char这几个装箱类的valueOf()方法是以128位分界线做了缓存的
+所以-127~128之间的包装类型用==是true(Integer i1和Integer i2比较)

@@ -1,0 +1,3 @@
+两种都是比较器
+comparator<T> 外比较器 将两种T比较
+comparable<T> 内比较器 将实现comparable接口的类和T进行比较

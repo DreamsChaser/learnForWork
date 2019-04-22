@@ -1,0 +1,8 @@
+引用拷贝
+Person p1 = new Person();
+Person p2 = p1;
+引用拷贝是同一对象
+对象拷贝
+两者是不同对象
+浅拷贝:实现cloneable接口 实现接口方法clone中的super.clone浅拷贝,拷贝对象中的引用类型和原对象的引用类型指向同一地址
+深拷贝:相比于浅拷贝 指向不同地址，要实现的话让引用类型实现cloneable (super.clone)

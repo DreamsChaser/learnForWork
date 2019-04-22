@@ -1,0 +1,4 @@
+强引用     new 不会回收，宁愿抛出outOfMemory内存溢出
+软引用     内存溢出前的最后一次gc会回收 SoftReference
+弱引用     每次gc全部被回收 WeakReference
+虚引用     和引用队列一起使用 可以用来做为对象是否存活的监控

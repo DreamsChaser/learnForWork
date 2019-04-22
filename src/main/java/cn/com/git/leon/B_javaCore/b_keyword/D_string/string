@@ -1,0 +1,10 @@
+String str 与 new String()
+String str = "test"会去字符串常量池中寻找test是否存在,
+存在则返回test地址，不存在则先去堆中创建一个对象，然后在在字符串常量池中创建"test"，地址复制给他
+new String也会去常量池中寻找test是否存在，不存在则会在字符串常量池创建
+不管存不存在都会在堆区new 一个String对象
+
+字符串相加
+string的+运算如果都是字符串常量 则在编译的时候就会生成一个总的字符串
+string的+运算如果是String对象相加 jvm每次会创建一个新的stringBuilder 进行append()操作
+

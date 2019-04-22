@@ -1,0 +1,22 @@
+背景&好处：
+    Java内存中的对象，是无法进行IO操作或者网络通信的（序列化是表示对象的一种方式）
+    序列化：将一个对象转换成字节数组，通过保存或转移这些字节数据来达到持久化的目的。
+    反序列化：将字节数组重新构造成对象
+
+
+1、对象必须实现serializable/Externalizable接口(否则报出异常NotSerializableException)
+2、Java序列化机制是通过在运行时判断类的serialVersionUID来验证版本一致性的
+    序列化时将serialVersionUID写入，反序列化是判断serialVersionUID是否一致
+    不一致报错java.io.InvalidClassException: local class incompatible:
+    stream classdesc serialVersionUID = 2311424771002807914, local class serialVersionUID = 1002807914
+3、对于transient不会被序列化
+比如 某些字段序列化时希望不用java自带的序列化方式 可以定义成transient
+然后通过自定义序列化手段去序列化该字段(加密)
+4、对于static字段则不序列化 反序列化能得到值是因为类变量
+可以通过反序列化前修改static字段 证明
+5、进行序列化、反序列化时，虚拟机会首先试图调用对象里的writeObject和readObject方法
+进行用户自定义的序列化和反序列化(手动序列化ObjectOutputStream和ObjectInputSteam)
+   没有则会去调用默认序列化反序列化方法(ObjectOutputSteam.defaultWriteObject,readObject)
+
+--------------------------------------------------------
+Externalizable 不进行自动序列化 只可进行手动序列化（Serializable自动序列化）

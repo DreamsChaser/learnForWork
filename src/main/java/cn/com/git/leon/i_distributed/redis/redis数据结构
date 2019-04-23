@@ -1,0 +1,23 @@
+String  key-value
+1、set key value
+2、get key
+3、incr key 原子+1
+4、desc key 原子-1
+Hash key field value
+1、hset key field value设置一个key的filed对应的值，filed不存在则新增，field存在则修改field对应的值。
+2、hget key field
+3、hgetAll key
+4、hdel key field1 [field2]
+5、hlen key 获取哈希表中字段的数量
+List 字符串列表
+1、	BLPOP/BRPOP key1 [key2 ] timeout 移出并获取列表的第一个/最后一个元素 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止
+2、	LLEN key 获取列表长度
+3、LPOP/RPOP key 移出并获取列表的第一个/最后一个元素
+4、LPUSH/RPUSH key value1 [value2] 将一个或多个值插入到列表头部
+Set Set 是 String 类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据。
+1、	SADD key member1 [member2] 向集合添加一个或多个成员，插入成功返回1，已存在则返回0
+2、	SDIFF key1 [key2] 返回给定所有集合的差集
+3、 SINTER key1 [key2] 返回给定所有集合的交集
+4、 SUNION key1 [key2] 返回所有给定集合的并集
+SortSet
+

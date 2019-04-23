@@ -1,0 +1,75 @@
+基于数组实现的一个阻塞队列，在创建ArrayBlockingQueue对象时必须制定容量大小。
+并且可以指定公平性与非公平性，默认情况下为非公平的。
+
+先进先出队列 有界队列
+
+原理
+底层是个数组，使用ReentrantLock和Condition,共享同一个锁 插入元素和读取元素互斥
+count表示队列中元素的个数。
+takeIndex和putIndex分别表示队首元素和队尾元素的下标
+Condition notEmpty(类似于消费者)
+Condition notFull(类似于生产者)
+
+public void put(E e) throws InterruptedException {
+        checkNotNull(e);
+        final ReentrantLock lock = this.lock;
+        lock.lockInterruptibly();
+        try {
+            while (count == items.length)
+                notFull.await();
+            enqueue(e);
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+
+private void enqueue(E x) {
+    // assert lock.getHoldCount() == 1;
+    // assert items[putIndex] == null;
+    final Object[] items = this.items;
+    items[putIndex] = x;
+    if (++putIndex == items.length)
+        putIndex = 0;
+    count++;
+    notEmpty.signal();
+}
+
+
+put简要说明:
+1、获取锁
+2、当队列元素个数等于总容量时，阻塞notFull
+3、2不满足或者notFull被唤醒则 insert
+3、enqueue:在数组中插入，如果++putIndex等于数组长度则置putIndex为0
+4、count++
+5、唤醒notEmpty
+
+public E take() throws InterruptedException {
+    final ReentrantLock lock = this.lock;
+    lock.lockInterruptibly();
+    try {
+        while (count == 0)
+            notEmpty.await();
+        return dequeue();
+    } finally {
+        lock.unlock();
+    }
+}
+
+private E dequeue() {
+    // assert lock.getHoldCount() == 1;
+    // assert items[takeIndex] != null;
+    final Object[] items = this.items;
+    @SuppressWarnings("unchecked")
+    E x = (E) items[takeIndex];
+    items[takeIndex] = null;
+    if (++takeIndex == items.length)
+        takeIndex = 0;
+    count--;
+    if (itrs != null)
+        itrs.elementDequeued();
+    notFull.signal();
+    return x;
+}
+
+常用场景 生产者消费者模型

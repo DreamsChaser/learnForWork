@@ -1,0 +1,4 @@
+底层利用hashMap实现 value都是Object
+
+java规定两个hash值相同的 equals必须相等
+否则一样的hash则存在不同位置 不符合set唯一性

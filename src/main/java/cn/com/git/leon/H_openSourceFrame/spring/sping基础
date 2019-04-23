@@ -1,0 +1,26 @@
+spring三个核心组件core bean context 最核心的是bean
+
+h_开源框架.spring ioc加载流程
+主要是abstractApplicationContext中的refresh方法
+1、prepareRefresh()记录下容器的启动时间、标记“已启动”状态、处理配置文件中的占位符
+2、obtainFreshBeanFactory()创建beanFactory然后将bean保存在beanFactory中的 beanDefinitionMap中
+    AbstractApplicationContext.refreshBeanFactory()
+    2.1//初始化DefaultListableBeanFactory
+	DefaultListableBeanFactory beanFactory = createBeanFactory();
+    2.2// 设置 BeanFactory 的两个配置属性：是否允许 Bean 覆盖、是否允许循环引用
+    customizeBeanFactory(beanFactory);
+    2.3// 加载 Bean 到 BeanFactory 中，bean即是BeanDefinition
+    loadBeanDefinitions(beanFactory);
+        通过XmlBeanDefinitionReader解析
+        parseBeanDefinitionElement()xml->BeanDefinition
+3、prepareBeanFactory(factory)设置 BeanFactory 的类加载器，添加几个 BeanPostProcessor，手动注册几个特殊的 bean
+4、finishBeanFactoryInitialization(beanFactory);初始化所有的 singleton beans（lazy-init 的除外）
+    DefaultListableBeanFactory.preInstantiateSingletons()
+    doCreateBean()一个是创建 Bean 实例的 createBeanInstance 方法，一个是依赖注入的 populateBean 方法，还有就是回调方法 initializeBean。
+        createBeanInstance()
+        //
+        populateBean
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+aop:AopNamespaceHandler

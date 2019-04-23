@@ -1,0 +1,74 @@
+由于lock基于AQS实现 AQS设置线程同步状态的 volatile int state
+state（int32位）字段分成高16位与低16位，其中高16位表示读锁个数，低16位表示写锁个数
+
+读写锁中读锁与读锁共享 读与写 写与写 写与读都是互斥
+
+1、读锁
+readLock.lock
+
+sync.acquireShared(1){
+    if (tryAcquireShared(arg) < 0)
+        doAcquireShared(arg);
+};
+
+尝试获取锁
+tryAcquiredShared(1){
+    //获取当前线程
+    Thread current = Thread.currentThread();
+    //获取volatile修饰的state(可见),0表示未锁定
+    int c = getState();
+    //exclusiveCount(c) = c&((1<<16) -1) 未锁定时返回0 锁定返回 1111 1111 1111 1111
+    //getExclusiveOwnerThread() 获得独占模式同步器的当前拥有者
+    //操作1：锁定状态并且不是当前线程 返回-1,进入等待队列
+    if (exclusiveCount(c) != 0 &&
+                    getExclusiveOwnerThread() != current)
+                    return -1;
+    //r = c>>>16无符号右移16位（读锁使用高16位，因此存在获取上限为2^16-1）
+    int r = sharedCount(c);
+    //操作2：读锁是否该阻塞，对于非公平模式下写锁获取优先级会高，如果存在要获取写锁的线程则读锁需要让步，公平模式下则先来先到
+    if (!readerShouldBlock() &&
+        r < MAX_COUNT &&
+        //操作3：CAS修改读锁状态，实际上是读锁状态+1
+        compareAndSetState(c, c + SHARED_UNIT)) {
+        //操作4：执行到这里说明读锁已经获取成功，因此需要记录线程状态。
+        if (r == 0) {
+            firstReader = current;
+            firstReaderHoldCount = 1;
+        } else if (firstReader == current) {
+            firstReaderHoldCount++;
+        } else {
+            HoldCounter rh = cachedHoldCounter;
+            if (rh == null || rh.tid != getThreadId(current))
+                cachedHoldCounter = rh = readHolds.get();
+            else if (rh.count == 0)
+                readHolds.set(rh);
+            rh.count++;
+        }
+        return 1;
+    }
+    // 当操作2，操作3失败时执行该逻辑
+    return fullTryAcquireShared(current);
+}
+
+获取读锁的时候
+操作1：锁定状态并且不是当前线程 返回-1,进入等待队列
+    操作2：读锁是否阻塞(是否有写锁存在)，对于非公平模式下写锁获取优先级会高，如果存在要获取写锁的线程则读锁需要让步，公平模式下则先来先到
+    操作3：CAS修改读锁状态，实际上是读锁状态+1
+    成功:
+        操作4：执行到这里说明读锁已经获取成功，因此需要记录线程状态。
+//    失败:?
+//        最外层嵌套循环
+//        操作5：存在写锁，且写锁并非当前线程则直接返回失败
+//        操作6：如果当前线程是重入读锁则放行
+释放读锁
+操作1：清理ThreadLocal对应的信息
+操作2：循环中利用CAS修改读锁状态
+
+
+获取写锁：
+    操作1：如果读锁数量不为0或者写锁数量不为0，并且不是重入操作，则获取失败。
+
+
+锁降级:
+总的来说，锁降级就是一种特殊的锁重入机制，JDK 使用 先获取写入锁，然后获取读取锁，最后释放写入锁
+这个步骤，是为了提高获取锁的效率

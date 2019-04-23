@@ -1,0 +1,27 @@
+synchronized
+每个对象有一个监视器锁(monitor)
+当monitor被占用时就会处于锁定状态
+线程进入synchronized代码块时尝试获取monitor的所有权(计算器底层执行monitorenter命令)
+1、如果monitor的进入数为0，则该线程进入monitor，然后将进入数设置为1，该线程即为monitor的所有者。
+2、如果线程已经占有该monitor，只是重新进入，则进入monitor的进入数加1.
+3.如果其他线程已经占用了monitor，则该线程进入阻塞状态，直到monitor的进入数为0，再重新尝试获取monitor的所有权。
+线程离开synchronized代码块时(计算器底层执行monitorexit命令)
+指令执行时，monitor的进入数减1，如果减1后进入数为0，那线程退出monitor，不再是这个monitor的所有者。
+其他被这个monitor阻塞的线程可以尝试去获取这个 monitor 的所有权。
+
+
+lock
+ReentrantLock
+ReentrantReadWriteLock(ReadLock,WriteLock)
+底层是由AQS abstractQueueSynchronized实现 通过AQS设置状态以及当前线程
+
+synchronized和lock比较
+1、synchronized底层....(见上)
+   lock有AQS(AbstractQueueSynchronized)实现，通过CAS无锁算法设置状态以及当前线程
+2、synchronized中遇到异常时会自动释放锁，lock不会需要手动unlock解锁释放
+3、synchronized是一种非公平锁 lock可以实现公平锁和非公平锁 同时可以实现读写锁(多个线程读的时候共享锁)
+   同时可以判断线程是否获得锁tryLock()，来进行一些其他操作
+4在性能上来说，如果竞争资源不激烈，两者的性能是差不多的，
+而当竞争资源非常激烈时（即有大量线程同时竞争），此时Lock的性能要远远优于synchronized。所以说，在具体使用时要根据适当情况选择。
+5、线程间通信synchronized用wait和notify和notifyAll
+             lock用condition的await signal和signalAll

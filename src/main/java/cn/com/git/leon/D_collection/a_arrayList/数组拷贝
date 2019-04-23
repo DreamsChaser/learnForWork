@@ -1,0 +1,19 @@
+Arrays.copyOf(Object[] elementData,int newCapacity)
+->Arrays.copyOf(U[] original, int newLength, Class<? extends T[]> newType
+即Arrays.copyOf(Object[] elementData,int newCapacity,elementData.class)
+1、根据传入的newType选择直接new或者反射反射生成数组
+        判断newType是否为数组（二维数组的复制）
+        是->new Object[newLength] 否则Array.newInstance(newType.getComponentType(), newLength)
+            Class.getComponentType()得到数组的class对象而非数组对象，反射生成数组
+2、System.arraycopy(original, 0, copy(1生成的数组), 0,Math.min(original.length, newLength))
+
+System.arrayCopy
+arraycopy(Object src, int srcPos,Object dest, int destPos,int length)
+src：源对象
+srcPos：源数组中的起始位置
+dest：目标数组对象
+destPos：目标数据中的起始位置
+length：要拷贝的数组元素的数量
+是浅拷贝(数组对象不一致 但是数组中的引用类型是引用的复制)
+
+数组.clone也是浅拷贝

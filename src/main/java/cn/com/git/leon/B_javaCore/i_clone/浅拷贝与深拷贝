@@ -4,5 +4,10 @@ Person p2 = p1;
 引用拷贝是同一对象
 对象拷贝
 两者是不同对象
-浅拷贝:实现cloneable接口 实现接口方法clone中的super.clone浅拷贝,拷贝对象中的引用类型和原对象的引用类型指向同一地址
-深拷贝:相比于浅拷贝 指向不同地址，要实现的话让引用类型实现cloneable (super.clone)
+浅拷贝:
+基本数据类型的成员变量浅拷贝进行值传递，引用类型是引用传递即两个对象地址相同
+实现方式：实现cloneable接口，重写clone()方法
+实现cloneable接口 实现接口方法clone中的super.clone浅拷贝,拷贝对象中的引用类型和原对象的引用类型指向同一地址
+深拷贝:
+相比于浅拷贝 指向不同地址，要实现的话让引用类型实现cloneable (super.clone),重写clone方法
+并且在主类中同样重写clone方法 分别clone引用类型

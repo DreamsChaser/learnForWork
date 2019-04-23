@@ -1,0 +1,13 @@
+基于链表实现的一个阻塞队列，在创建LinkedBlockingQueue对象时如果不指定容量大小，
+则默认大小为Integer.MAX_VALUE。
+
+先进先出队列 有界队列
+
+count定义为原子类 因为读写不互斥
+AtomicInteger count = this.count
+
+ReentrantLock takeLock
+
+ReentrantLock putLock
+
+插入读取两个锁 不互斥

@@ -6,16 +6,10 @@ package cn.com.git.leon.B_javaCore.i_clone.deepClone;
  */
 public class StudentTest {
     public static void main(String[] args) {
-        Name name = new Name();
+        Name name = new Name("小","明");
         name.setFirstName("小");
         name.setSecondName("明");
         Student student = new Student();
         student.setName(name);
-        try {
-            Student student1 = (Student) student.clone();
-            System.out.println(student.getName() == student1.getName());
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
     }
 }

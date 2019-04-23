@@ -1,0 +1,8 @@
+类在加载过程中会实例化一个java.lang.Class对象
+class对象里包含 field method construct等一些 可以通过一些方法获取类的属性 调用类的方法
+
+私有属性通过field.setAccessible(true);获取
+
+getFields和getDeclaredFields
+getFields()：获得某个类的所有的公共（public）的字段，包括父类中的(public)字段。
+getDeclaredFields()：获得某个类的所有声明的字段，即包括public、private和proteced，但是不包括父类的申明字段

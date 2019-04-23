@@ -12,6 +12,8 @@ public class Person implements Cloneable{
 
     private Integer age2;
 
+    private Company company;
+
     public String getName() {
         return name;
     }
@@ -36,8 +38,34 @@ public class Person implements Cloneable{
         this.age2 = age2;
     }
 
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public Person(String name, int age, Integer age2,Company company) {
+        this.name = name;
+        this.age = age;
+        this.age2 = age2;
+        this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", age2=" + age2 +
+                ", company=" + company +
+                '}';
     }
 }

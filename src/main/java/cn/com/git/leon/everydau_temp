@@ -7,3 +7,4 @@ redis常见问题
 分库分表(末位取余分区)
 工具类 static bean
 hash一致性
+concurrentHashMap

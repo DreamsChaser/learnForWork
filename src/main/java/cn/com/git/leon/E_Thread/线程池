@@ -1,0 +1,44 @@
+线程池
+减少了创建和销毁线程的次数，每个工作线程都可以被重复利用，可执行多个任务
+可以根据系统的承受能力，调整线程池中工作线程的数据，防止因为消耗过多的内存导致服务器崩溃
+
+种类
+1、newCachedThreadPool
+   核心线程数corePoolSize 0、最大线程数为Integer最大值 空闲时间60s 阻塞队列为SynchronousQueue(无界无缓冲)
+   SynchronousQueue会组织任务进队列而是直接新建线程处理
+   可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+2、newFixedThreadPool
+   核心线程数corePoolSize和最大线程数相同为 n  空闲时间0 阻塞队列为LinkedBlockingQueue(无界缓冲)
+   n个线程处理任务 超过的会进入阻塞队列
+创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+3、newScheduledThreadPool
+   核心线程数corePoolSize n、最大线程数为Integer最大值 空闲时间0s 阻塞队列为DelayedWorkQueue
+   创建一个定长线程池，支持定时及周期性任务执行
+4、newSingleThreadExecutor
+   核心线程数corePoolSize和最大线程数相同为 1  空闲时间0 阻塞队列为LinkedBlockingQueue(无界缓冲)
+   创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，
+
+
+corePoolSize 核心运行的poolSize，也就是当超过这个范围的时候，就需要将新的Runnable放入到等待队列workQueue中
+maxPoolSize：最大线程数
+当线程数>=corePoolSize，且任务队列已满时。线程池会创建新线程来处理任务
+当线程数=maxPoolSize，且任务队列已满时，线程池会拒绝处理任务而抛出异常
+queueCapacity：任务队列容量（阻塞队列），当线程数达到核心线程数时，新任务会放在队列中排队等待执行
+keepAliveTime：线程空闲时间
+当线程空闲时间达到keepAliveTime时，线程会退出，直到线程数量=corePoolSize
+allowCoreThreadTimeout：允许核心线程超时
+rejectedExecutionHandler 任务拒绝处理器（饱和策略）
+Abort策略：默认策略，新任务提交时直接抛出未检查的异常RejectedExecutionException，该异常可由调用者捕获。
+CallerRuns策略：为调节机制，既不抛弃任务也不抛出异常，而是将某些任务回退到调用者。不会在线程池的线程中执行新的任务，而是在调用exector的线程中运行新的任务。
+Discard策略：新提交的任务被抛弃。
+
+
+execute和submit
+execute执行runnable 无返回值
+submit 执行callable 有返回值
+
+线程池的关闭
+shutdown  该方法不会等待之前已经提交的任务执行完毕，直接向下执行代码，提交的任务也会继续执行
+shutdownNow    强制关闭并中断执行中的线程，线程会抛出InterruptedException
+awaitTermination(long timeout,TimeUnit)
+会等待timeout超过超时时间后如果线程仍然在执行则直接向下执行(任务依旧能够执行完毕)

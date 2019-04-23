@@ -1,0 +1,23 @@
+每一个Mybatis的应用程序都以一个SqlSessionFactory对象的实例为核心。
+首先用字节流通过Resource将配置文件读入，然后通过SqlSessionFactoryBuilder().build方法创建SqlSessionFactory，
+然后再通过SqlSessionFactory.openSession()方法创建一个SqlSession为每一个数据库事务服务。
+经历了Mybatis初始化 –>创建SqlSession –>运行SQL语句，返回结果三个过程
+
+
+
+Reader reader = Resources.getResourceAsReader("mybatis/config.xml");
+SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(reader);
+    1、XMLConfigBuilder parser = new XMLConfigBuilder(reader, environment, properties);
+    首先用字节流通过Resource将配置文件读入，将xml文件解析成document
+    2、parser.parse()
+    将标签解析为XNode，XNode解析为Configuration
+        2、1加载environment
+        2、2加载mapper（同上解析xml）
+    3、DefaultSqlSessionFactory(configuration)
+
+
+MyBatis的缓存分为两种：
+
+一级缓存，一级缓存是SqlSession级别的缓存，对于相同的查询，会从缓存中返回结果而不是查询数据库（如果是spring整合mybatis则会在不开启事务的时候缓存失效）
+二级缓存，二级缓存是Mapper级别的缓存，定义在Mapper文件的<cache>标签中并需要开启此缓存，多个Mapper文件可以共用一个缓存，依赖<cache-ref>标签配置
+假如定义了MyBatis二级缓存，那么MyBatis二级缓存读取优先级高于MyBatis一级缓存。

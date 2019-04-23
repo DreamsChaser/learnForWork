@@ -1,0 +1,71 @@
+开启注解扫描包和在xml中配置bean不能同时开启
+
+applicationContext
+
+IOC容器的创建
+bean配置在xml中
+abstractApplicationContext.refresh();     
+1、prepareRefresh()记录容器启动时间 标记已启动
+2、ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();取刷新Spring上下文的Bean工厂
+	2.1、abstractApplicationContext().refreshBeanFactory() ==>> AbstractRefreshableApplicationContext().refreshBeanFactory()这一步创建容器
+		2.1.1DefaultListableBeanFactory beanFactory = createBeanFactory()创建DefaultListableBeanFactory;
+			2.1.1.1
+	2.2、loadBeanDefinitions(beanFactory);该方法最终的目的是将XML文件进行解析，以Key-Value的形式，Key表示BeanName，Value为BeanDefinition，最终存入DefaultListableBeanFactorybeanDefinitionMap中	
+		 // 将 BeanDefinition 放到这个 map 中，这个 map 保存了所有的 BeanDefinition
+         this.beanDefinitionMap.put(beanName, beanDefinition);
+         // 这是个 ArrayList，所以会按照 bean 配置的顺序保存每一个注册的 Bean 的名字
+         this.beanDefinitionNames.add(beanName);（Set）
+3、prepareBeanFactory(beanFactory);设置 BeanFactory 的类加载器,手动注册几个特殊的 bean
+4、finishBeanFactoryInitialization(beanFactory);初始化非懒加载的单例bean
+	4.1遍历2.2中的beanDefinitionNames，调用getBean ==》》AbstractBeanFactory类的doGetBean
+		4.1.1createBean()=>AbstractAutowireCapableBeanFactory.createBean()
+			4.1.1.1doCreateBean()
+				4.1.1.1.1createBeanInstance(beanName, mbd, args);实例化bean
+									// 采用工厂方法实例化
+									// 如果不是第一次创建，比如第二次创建 prototype bean。构造方法注入
+											// 如果不存在方法覆写，那就使用 java 反射进行实例化，否则使用 CGLIB,
+				4.1.1.1.2populateBean(beanName, mbd, instanceWrapper);设置值(依赖注入)
+									通过名字找到所有属性值，如果是 bean 依赖，先初始化依赖的 bean。记录依赖关系
+				4.1.1.1.3// 还记得 init-method 吗？还有 InitializingBean 接口？还有 BeanPostProcessor 接口？
+						// 这里就是处理 bean 初始化完成后的各种回调
+						exposedObject = initializeBean(beanName, exposedObject, mbd);
+							 // 如果 bean 实现了 BeanNameAware、BeanClassLoaderAware 或 BeanFactoryAware 接口，回调
+							 // BeanPostProcessor 的 postProcessBeforeInitialization 回调
+							 // 处理 bean 中定义的 init-method， 或者如果 bean 实现了 InitializingBean 接口，调用 afterPropertiesSet() 方法
+							 //	BeanPostProcessor 的 postProcessAfterInitialization 回调
+	
+
+
+aop:
+连接点：
+切点： 需要应用通知的目标函数（表达式）
+通知：前置通知，后置通知，环绕通知，最后通知，抛出通知
+切面：
+
+在2.2里将xml转化bean时parseBeanDefinitions
+默认namespace走parseDefaultElement
+aop走parseCustomElement
+ConfigBeanDefinitionParser.parse() 据配置proxy-target-class和expose-proxy，设置是否使用CGLIB进行代理以及是否暴露最终的代理
+解析	<aop:config>下的节点为<aop:aspect>
+	根据织入方式（before、after这些）创建RootBeanDefinition，名为adviceDef即advice定义
+	将上一步创建的RootBeanDefinition写入一个新的RootBeanDefinition，构造一个新的对象，名为advisorDefinition，即advisor定义
+	将advisorDefinition注册到DefaultListableBeanFactory中  这个就是advisorDefinition（advisor下文提到的）
+
+	总之一句话解析了<aop:pointcut>标签中的内容并将之转换为RootBeanDefintion存储在Spring容器中
+	
+	接着代理bean的实例化在上文中的4.1.1.1.3的initializeBean
+	
+		1、判断是否为<bean>生成代理（寻找advisor）
+			目标类必须满足expression的匹配规则
+			目标类中的方法必须满足expression的匹配规则，当然这里方法不是全部需要满足expression的匹配规则，有一个方法满足即可
+			==》》需要被生成代理对象，具体方式为返回一个数组对象，该数组对象中存储的是<bean>对应的Advisor。
+		2、为<bean>生成代理代码上下文梳理
+			判断的内容是<aop:config>这个节点中proxy-target-class="false"或者proxy-target-class不配置，即不使用CGLIB生成代理。如果满足条件，进判断，获取当前Bean实现的所有接口，讲这些接口Class对象都添加到ProxyFactory中。
+			proxyFactory.getProxy(this.proxyClassLoader)
+			创建AopProxy接口实现类
+			通过AopProxy接口的实现类的getProxy方法获取<bean>对应的代理
+				JdkDynamicAopProxy
+				ObjenesisCglibAopProxy
+		
+		
+		

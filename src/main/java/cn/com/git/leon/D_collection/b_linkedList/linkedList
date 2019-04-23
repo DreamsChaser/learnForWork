@@ -1,0 +1,25 @@
+1、底层实现
+Node<E> first 第一个
+Node<E> last  最后一个
+有参构造
+public LinkedList(Collection<? extends E> c) {
+    this();
+    addAll(c);
+}
+2、添加元素
+add
+final Node<E> l = last;
+final Node<E> newNode = new Node<>(l, e, null);//定义新的Node 前节点为last后为null
+last = newNode;//last改为新加的Node节点
+if (l == null)//如果链表为空,first置为newNode否则把last的next置为newNode
+            first = newNode;
+        else
+            l.next = newNode;
+size++;
+modCount++;
+3、扩容方式(无)
+4、优缺点 插入删除快捷只需更改对应节点的Node 查询需要遍历链表所以查询速度慢
+5、线程安全性
+线程不安全
+6、其它特性
+可以重复 可以插入null

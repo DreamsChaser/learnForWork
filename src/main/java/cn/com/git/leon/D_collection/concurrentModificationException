@@ -1,0 +1,7 @@
+concurrentModificationException异常
+用迭代器对List迭代时如果在此期间修改了list的值会抛出异常
+原因如下： 迭代器的next方法时
+ if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+
+  remove操作会修改modCount

@@ -1,0 +1,71 @@
+1、底层实现
+底层是数组+单链表+红黑树
+数组
+Node[] table哈希桶数组
+链表节点(键值对)
+static class Node<K,V> implements Map.Entry<K,V> {
+        final int hash; //用来定位数组索引位置
+        final K key;
+        V value;
+        Node<K,V> next; 下一个节点
+}
+int threshold;所能容纳的key-value对极限 threshold = length(node数组长度) * Load factor 超过这个数目就重新resize
+final float loadFactor;    // 负载因子默认0.75
+int modCount; 而modCount字段主要用来记录HashMap内部结构发生变化的次数(key不变value变则不属于结构变化)
+int size; HashMap中实际存在的键值对数量
+
+//扰动函数，确定key所在的位置
+右移16位然后异或
+key的hashCode值返回int型是个-2^31 2^31的，一般情况下很少发生碰撞，对数组长度取模，h&(length-1) 长度选2次幂这样是个低位掩码，
+每次取后几位，但这样碰撞会很严重
+int32bit 右移16位 高8位低8位异或 保证hash碰撞次数少
+static final int hash(Object key) {
+        int h;
+        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+}
+
+
+2、添加元素
+put
+a、Node[]数组为空或者长度为0 => esize扩容
+b、计算key的hash和数组下标i = (n - 1) & hash 若该数组下标上的值为null则新建Node，newNode(hash, key, value, null)，否则往下
+c、若该数组下标上的值不为空则判断该位置上的Node和put的Node做比较(hash==,key==||key.equals)一直则覆盖,否则向下
+d、原位置Node与put的Node不一致则遍历链表若(hash==,key==||key.equals)则覆盖，否则遍历结束后再最后new Node （长度大于8则转化为红黑树）
+e、判断实际存在的键值对数量size是否超多了最大容量threshold，如果超过，进行扩容。
+
+3、扩容方式
+jdk1.8的扩容:
+a、初始化 0的时候扩容为长度1>>4即16，极限键值对为16*0.75=12
+   其它时候长度和键值对扩容为2倍(长度为元长度*2，length-1在扩容前后的变化就转化成二进制高位多1bit,
+   确定下标运算为hash&length-1可得扩容后的位置要么不变要么原位置+元长度（左边多1bit）这样只需知道hash多出的一位是1还是0就可以(即hash&length(不减1)))
+b、新建Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+c、循环旧数组
+    把旧数组的Node赋值给e并把旧数组置空
+    if ((e = oldTab[j]) != null) {
+        oldTab[j] = null;
+    如果链表没有后续节点，直接重新计算位置并赋值
+    if (e.next == null) {
+        newTab[e.hash & (newCap - 1)] = e;
+    如果链表有后续节点 循环遍历链表 hash&oldCap
+    判断0或者1 0则newTab[] = e
+               1则newTab[+oldCap] = e
+
+jdk1.7的扩容:
+创建一个新的数组newTable，容量是oldTable的一倍
+遍历oldTable，拿到每个链表
+遍历链表，头插法插入newTable
+do {
+    Entry<K,V> next = e.next; // <--假设线程一执行到这里就被调度挂起了
+    int i = indexFor(e.hash, newCapacity);
+    e.next = newTable[i];(头插法，将现有节点插入目标节点的next)
+    newTable[i] = e;
+    e = next;
+} while (e != null);
+4、优缺点
+
+5、线程安全性
+非线程安全
+
+6、其它特性
+键和值都可以为空（建为空是k=0）
+ConcurrentModifyException

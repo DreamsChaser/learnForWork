@@ -18,6 +18,9 @@ public class Student implements Cloneable{
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+        Object object = super.clone();
+        Student student = (Student) object;
+        student.name = (Name) name.clone();
+        return object;
     }
 }

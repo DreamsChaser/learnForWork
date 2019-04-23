@@ -1,0 +1,11 @@
+K key;
+V value;
+Entry<K,V> left;
+Entry<K,V> right;
+Entry<K,V> parent;
+
+比较之后放入left 或者right
+
+
+treeSet基础treeMap
+不允许键为空

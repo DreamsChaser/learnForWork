@@ -1,4 +1,4 @@
-package cn.com.git.leon.E_Thread.ThreadPoolDemo.shutdownAndshutdownNow;
+package cn.com.git.leon.E_Thread.b_threadPool.shutdownAndshutdownNow;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -8,8 +8,7 @@ import java.util.concurrent.TimeUnit;
  * @author sirius
  * @since 2019/4/9
  */
-public class ShutdownDemo {
-
+public class AwaitTerminationDemo {
     public static void main(String[] args) {
         Runnable runnable = () -> {
             System.out.println("我是"+Thread.currentThread().getName());
@@ -22,7 +21,11 @@ public class ShutdownDemo {
         };
         ExecutorService executorService = Executors.newCachedThreadPool();
         executorService.submit(runnable);
-        executorService.shutdown();
+        try {
+            executorService.awaitTermination(1,TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println("线程池已经关闭了");
     }
 }

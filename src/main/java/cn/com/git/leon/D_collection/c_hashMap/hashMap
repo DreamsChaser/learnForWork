@@ -10,7 +10,7 @@ static class Node<K,V> implements Map.Entry<K,V> {
         Node<K,V> next; 下一个节点
 }
 int threshold;所能容纳的key-value对极限 threshold = length(node数组长度) * Load factor 超过这个数目就重新resize
-final float loadFactor;    // 负载因子默认0.75
+final float loadFactor;    // 负载因子默认0.75,默认容量16 默认极限键值对12
 int modCount; 而modCount字段主要用来记录HashMap内部结构发生变化的次数(key不变value变则不属于结构变化)
 int size; HashMap中实际存在的键值对数量
 

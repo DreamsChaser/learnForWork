@@ -1,4 +1,4 @@
-package cn.com.git.leon.E_Thread.ticketDemo;
+package cn.com.git.leon.E_Thread.a_thread.B_ticketDemo;
 
 /**
  * @author sirius

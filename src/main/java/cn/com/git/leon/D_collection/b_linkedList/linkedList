@@ -1,6 +1,19 @@
 1、底层实现
 Node<E> first 第一个
 Node<E> last  最后一个
+
+private static class Node<E> {
+        E item;
+        Node<E> next;
+        Node<E> prev;
+
+        Node(Node<E> prev, E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+
 有参构造
 public LinkedList(Collection<? extends E> c) {
     this();

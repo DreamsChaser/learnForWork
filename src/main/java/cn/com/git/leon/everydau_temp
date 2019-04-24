@@ -8,3 +8,4 @@ redis常见问题
 工具类 static bean
 hash一致性
 concurrentHashMap
+jdk8

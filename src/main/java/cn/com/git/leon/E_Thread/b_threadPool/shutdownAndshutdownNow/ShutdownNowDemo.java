@@ -1,4 +1,4 @@
-package cn.com.git.leon.E_Thread.ThreadPoolDemo.shutdownAndshutdownNow;
+package cn.com.git.leon.E_Thread.b_threadPool.shutdownAndshutdownNow;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

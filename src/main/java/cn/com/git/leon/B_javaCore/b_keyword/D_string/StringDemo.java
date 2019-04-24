@@ -19,8 +19,10 @@ public class StringDemo {
         String str3 = new String("c") + new String("d");
         String str4 = "cd";
         String str5 = "c" + "d";
+        String str6 = "c" + new String("d");
         System.out.println(str3 == str4);
         System.out.println(str4 == str5);
+        System.out.println(str5 == str6);
     }
 
 }

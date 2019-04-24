@@ -1,0 +1,4 @@
+StringBuilder是线程不安全的，而StringBuffer是线程安全的
+
+string的修改实则是对象的创建与回收
+StringBuilder和StringBuffer的修改是直接修改值

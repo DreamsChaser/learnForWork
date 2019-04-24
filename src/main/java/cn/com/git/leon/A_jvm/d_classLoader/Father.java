@@ -6,11 +6,14 @@ package cn.com.git.leon.A_jvm.d_classLoader;
  */
 public class Father {
 
+    static int i = 10;
+
     {
         System.out.println("父类普通代码块");
     }
 
     static {
+        System.out.println(i);
         System.out.println("父类静态代码块");
     }
 

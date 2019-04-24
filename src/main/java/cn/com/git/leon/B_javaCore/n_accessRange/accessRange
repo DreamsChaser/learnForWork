@@ -1,0 +1,8 @@
+         同一类 同一包 不同包子类 不同包非子类
+public    √     √     √          √
+
+protect   √    √      √
+
+default   √   √
+
+private   √

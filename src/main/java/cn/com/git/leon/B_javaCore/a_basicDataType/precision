@@ -1,0 +1,2 @@
+低精度像高精度自动转换
+二元操作符所有的byte型. short型和char型将被提升到int型(如果以上三种类型和long float double进行操作则会转化成对应类型)

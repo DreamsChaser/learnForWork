@@ -42,7 +42,7 @@ wait和sleep
 wait释放锁，sleep持有锁
 
 join
-在A线程中调用B的join() 将A线程阻塞，等B执行完后在唤醒A
+在A线程中调用B的join() 将A线程阻塞，等B执行完后在唤醒A(底层用的是wait和notify 所以会释放锁)
 yield
 使当前线程从执行状态（运行状态）变为可执行态（就绪状态）,cpu重新选择线程分配时间片执行
 yield不用用于交替执行线程!!!! 调用yield的线程也能竞争分配cpu
@@ -52,6 +52,11 @@ sleep和sleep(0)
     Thread.Sleep(0)的作用，就是“触发操作系统立刻重新进行一次CPU竞争”。
     sleep(n)在n秒内不会参与CPU竞争
 
+interrupt
+interrupt实则是设置当前线程对象的中断标志位
+wait和timed_wating状态调用Thread.interrupt会抛出异常并把中断标志位清空，其它状态调用interrupt只是修改标志位
+synchronized是不可中断锁(阻塞) lock可中断
+线程A、B进入同步块 A获得锁,B阻塞,此时打断B，synchronized不会响应，lock会直接抛出InterruptedException异常
 
 并发的安全性: 必须要保证原子性、可见性以及有序性
 线程安全的实现

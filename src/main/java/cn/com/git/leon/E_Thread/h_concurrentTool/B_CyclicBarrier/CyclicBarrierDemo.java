@@ -1,4 +1,4 @@
-package cn.com.git.leon.E_Thread.concurrentTool;
+package cn.com.git.leon.E_Thread.h_concurrentTool.B_CyclicBarrier;
 
 import java.sql.Time;
 import java.util.concurrent.*;
@@ -34,7 +34,7 @@ public class CyclicBarrierDemo {
 //            e.printStackTrace();
 //        }
         ExecutorService executorService2 = Executors.newFixedThreadPool(10);
-        for (int i =0;i<5;i++) {
+        for (int i =0;i<10;i++) {
             executorService2.submit(() -> {
                 try {
                     long timeOut = (long) (Math.random()*10);

@@ -1,4 +1,4 @@
-package cn.com.git.leon.E_Thread.concurrentTool;
+package cn.com.git.leon.E_Thread.h_concurrentTool.C_semaphore;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

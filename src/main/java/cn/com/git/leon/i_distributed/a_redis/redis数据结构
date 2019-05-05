@@ -1,4 +1,4 @@
-String  key-value
+String  key-value 字符串类型的值最多512M
 1、set key value
 2、get key
 3、incr key 原子+1

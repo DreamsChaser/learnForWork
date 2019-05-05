@@ -1,14 +1,12 @@
-八 开源框架
 熔断降级
 限流
+ngnix
 分布式网络抖动
-redis kafka
-kafka重复消费和漏发
-redis常见问题
 工具类 static bean
 hash一致性
 concurrentHashMap
 jdk8
-REDIS 慢删除 慢日志
 线程打印abc
 集群的宕机与恢复
+zk
+高可用

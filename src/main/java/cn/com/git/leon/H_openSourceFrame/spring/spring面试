@@ -1,0 +1,7 @@
+问题一:在spring中如何在静态方法中使用注入的bean?
+    1、@Autowired bean
+    2、定义一个static bean
+    3、在该类中定义@PostConstruct方法中赋值给static bean
+    4、在静态方法中使用该static bean;
+
+问题二:

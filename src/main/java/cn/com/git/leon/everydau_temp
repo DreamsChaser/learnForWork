@@ -1,7 +1,4 @@
-熔断降级
-限流
-ngnix
-分布式网络抖动
+ngnix限流 负载均衡
 工具类 static bean
 hash一致性
 concurrentHashMap

@@ -1,5 +1,4 @@
 ngnix限流 负载均衡
-工具类 static bean
 hash一致性
 concurrentHashMap
 jdk8

@@ -1,0 +1,7 @@
+forEach 遍历
+filter 过滤
+map 对结果集做处理，将对象转化为其它对象
+sorted
+limit
+collect
+distinct

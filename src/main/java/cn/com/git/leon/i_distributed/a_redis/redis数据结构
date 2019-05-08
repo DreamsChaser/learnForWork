@@ -14,6 +14,7 @@ List 字符串列表
 2、	LLEN key 获取列表长度
 3、LPOP/RPOP key 移出并获取列表的第一个/最后一个元素
 4、LPUSH/RPUSH key value1 [value2] 将一个或多个值插入到列表头部
+5、LRANGE key start end （0表示第一个 1表示第二个 -1表示倒一 ，-2表示倒2）
 Set Set 是 String 类型的无序集合。集合成员是唯一的，这就意味着集合中不能出现重复的数据。
 1、	SADD key member1 [member2] 向集合添加一个或多个成员，插入成功返回1，已存在则返回0
 2、	SDIFF key1 [key2] 返回给定所有集合的差集

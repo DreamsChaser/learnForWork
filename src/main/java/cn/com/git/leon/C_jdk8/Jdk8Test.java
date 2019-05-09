@@ -25,7 +25,10 @@ public class Jdk8Test {
         System.out.println("----");
         list.stream().map(i->i+1).forEach(System.out::print);
         System.out.println("----");
-
+        list.stream().limit(2).forEach(System.out::print);
+        System.out.println("----");
+        list.stream().skip(10).forEach(System.out::print);
+        System.out.println("----");
         UserBean userBean1 = new UserBean("1","张三",11);
         UserBean userBean2 = new UserBean("2","李四",10);
         UserBean userBean3 = new UserBean("3","王五",9);
@@ -35,5 +38,12 @@ public class Jdk8Test {
         userBeanList.add(userBean3);
         List<String> nameList = userBeanList.stream().map(userBean -> userBean.getName()).collect(Collectors.toList());
         System.out.println(JSON.toJSONString(nameList));
+        List<SimpleBean> simpleBeanList = userBeanList.stream().map(userBean -> {
+            SimpleBean simpleBean = new SimpleBean();
+            simpleBean.setId(userBean.getId());
+            simpleBean.setName(userBean.getName());
+            return simpleBean;
+        }).collect(Collectors.toList());
+        System.out.println(JSON.toJSONString(simpleBeanList));
     }
 }

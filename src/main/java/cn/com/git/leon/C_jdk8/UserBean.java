@@ -44,4 +44,10 @@ public class UserBean {
 
     public UserBean() {
     }
+
+    @Override
+    public boolean equals(Object o) {
+        UserBean userBean = (UserBean)o;
+        return this.id.equals(userBean.getId());
+    }
 }

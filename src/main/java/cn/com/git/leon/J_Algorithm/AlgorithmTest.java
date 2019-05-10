@@ -1,4 +1,4 @@
-package cn.com.git.leon.j_Algorithm;
+package cn.com.git.leon.J_Algorithm;
 
 /**
  * @author sirius

@@ -1,4 +1,4 @@
-package cn.com.git.leon.i_distributed.c_distributedLock;
+package cn.com.git.leon.I_distributed.c_distributedLock;
 
 /**
  * @author sirius

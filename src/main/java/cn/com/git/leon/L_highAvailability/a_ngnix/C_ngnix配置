@@ -1,0 +1,30 @@
+1、限流
+limit_req_zone $binary_remote_addr zone=myRateLimit:10m rate=10r/s
+limit_req_zone : 是限流声明.
+key:$binary_remote_addr: 表示根据客户端 ip 来 限流, 比如 上面的限流配置 限制每个客户端ip的请求频率为一秒一次, 你如果耍流氓一秒两次, 就会被限流 会返回一个http 503 错误给你.
+zone：定义共享内存区来存储访问信息， myRateLimit:10m 表示一个大小为10M，名字为myRateLimit的内存区域。1M能存储16000 IP地址的访问信息，10M可以存储16W IP地址访问信息。
+rate 用于设置最大访问速率，rate=10r/s 表示每秒最多处理10个请求。Nginx 实际上以毫秒为粒度来跟踪请求信息，因此 10r/s 实际上是限制：每100毫秒处理一个请求。这意味着，自上一个请求处理完后，若后续100毫秒内又有请求到达，将拒绝处理该请求。
+
+2负载均衡配置
+轮询
+upstream nodes {
+server 192.168.10.1:8668;
+server 192.168.10.2:8668;
+}
+权重
+upstream nodes {
+server 192.168.10.1:8668 weight=5;
+server 192.168.10.2:8668 weight=10;
+}
+ip_hash
+upstream nodes {
+ip_hash;
+server 192.168.10.1:8668;
+server 192.168.10.2:8668;
+}
+fair配置
+upstream nodes {
+server 192.168.10.1:8668;
+server 192.168.10.2:8668;
+fair;
+}

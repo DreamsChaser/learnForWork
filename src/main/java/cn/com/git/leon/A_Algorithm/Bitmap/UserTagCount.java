@@ -1,4 +1,4 @@
-package cn.com.git.leon.J_Algorithm.Bitmap;
+package cn.com.git.leon.A_Algorithm.Bitmap;
 
 /**
  * 用户标签统计

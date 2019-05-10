@@ -1,0 +1,2 @@
+1、通过ngnix负载均衡的ip_hash让同一ip访问同一服务器，session存放在这一台服务器就行
+2、redis实现

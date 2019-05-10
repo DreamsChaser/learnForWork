@@ -1,1 +1,6 @@
 cookie数据存放在客户的浏览器上，session数据放在服务器上。
+
+cookie
+用户发送请求到服务器 服务器返回响应同时set cookie到客户端，客户端下一次请求到服务器带上cookie
+
+cookie不可跨域名

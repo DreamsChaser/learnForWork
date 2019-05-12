@@ -1,9 +1,8 @@
 package cn.com.git.leon.A_Algorithm.Select;
 
 /**
- * 二分法
  * @author sirius
- * @since 2019/5/10
+ * @since 2019/5/12
  */
-public class DichotomySelect {
+public class HashTableSearch {
 }

@@ -1,9 +1,11 @@
 package cn.com.git.leon.A_Algorithm.Sort;
 
+import cn.com.git.leon.A_Algorithm.ArrayData;
 import com.alibaba.fastjson.JSON;
 
 /**
  * 冒泡排序
+ * 多次两两比较
  * @author sirius
  * @since 2019/5/10
  */
@@ -44,13 +46,9 @@ public class BubbleSort {
         }
     }
 
-    public static void optimizeSort2(){
-
-    }
-
     public static void main(String[] args) {
-        BubbleSort.sort(Data.DATA);
-        System.out.println(JSON.toJSONString(Data.DATA));
-        System.out.println(JSON.toJSONString(Data.DATA).equals(JSON.toJSONString(Data.CORRECT_DATA)));
+        BubbleSort.optimizeSort1(ArrayData.DATA);
+        System.out.println(JSON.toJSONString(ArrayData.DATA));
+        System.out.println(JSON.toJSONString(ArrayData.DATA).equals(JSON.toJSONString(ArrayData.CORRECT_DATA)));
     }
 }

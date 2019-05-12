@@ -1,8 +1,8 @@
 package cn.com.git.leon.A_Algorithm.Sort;
 
-/**
+/**基数排序
  * @author sirius
- * @since 2019/5/10
+ * @since 2019/5/12
  */
-public class SortTest {
+public class RadixSort {
 }

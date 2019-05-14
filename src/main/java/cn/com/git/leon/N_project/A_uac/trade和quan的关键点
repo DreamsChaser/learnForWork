@@ -1,0 +1,81 @@
+QUAN
+领券:
+1、通过缓存查询活动id
+2、通过缓存查询活动下产品信息
+3、kf070:quan:activity:total:get:[activityId]  +  1 , ttl = -1 和quanTotal比较 <quanTotal则减1
+把所有通过的规则存入列表(每日限量 每人限量) 领券过程失败则回滚(redis.decr) 
+
+4、具体领券事务： 
+循环活动下产品列表
+商户券n张出库: 剩余数量decr,n小于0则回滚，rpop出库，并发时出库id可能为null且出库数量小于n则回滚
+校验理财券的理财额度
+保存quanUser
+
+库存 
+导入：
+设置未领取保存商户券MerchantQuanManage
+lpush kf070:merchant:quan:stock:record:[productId] 库存id存入列表
+incr kf070:quan:store:other:cost:count:[productId] 库存+1
+
+占用、取消占用和使用
+try commit cancel
+
+随机裂变算法
+裂变总值 total 裂变次数num 裂变最小值min > (total/num)*2
+最大裂变值 max = (total/num)*2
+每次裂变值 v = random(0,1)*max < min ? min:v
+
+
+展示渠道A:2^0 B:2^1 C:2^2 D:2^3.....
+展示渠道：用bitmap数据结构 相加之后存入数据库 例如1表示展示A 2表示展示B 3表示展示AB （即从低位开始各个位上的0或1表示不展示或展示）
+展示给前端的时候通过右移运算 value>>i>0 i++ 
+value>>i & 1 == 1要展示的渠道 1 << i
+
+A且B
+bitand(value,A+B) = A+B  value&（A+B）
+A或B
+bitand(value,A+B) > 0    value& (A+B)
+
+
+
+TRADE
+redis锁
+doOrder方法-用户锁 kf070:locked:doOrder:[securityToken.userInfoValue]
+payOrder-订单锁 kf070:locked:doOrder:[orderNo]
+
+@Around(value = "@annotation(cn.com.git.htsc.uac.trade.core.cache.RedisLock)")
+    public Object process(ProceedingJoinPoint point) throws Throwable {
+        Object result = null;
+        Object[] args = point.getArgs();
+        Method method = MethodSignature.class.cast(point.getSignature()).getMethod();
+        RedisLock redisLockCache = method.getAnnotation(RedisLock.class);
+        // 注解不为空时使用redis的lock
+        if (redisLockCache != null && redisLockCache.value() != null) {
+            String redisLockKey = redisLockCache.value();
+            long lockTime = redisLockCache.lockTime();
+            String redisKey = replace(redisLockKey, args);
+            System.out.println("redisKey:" + redisKey);
+            // 获取reids lock, 执行方法
+			if (jedis.set(redisKey, "locked", "NX", "PX", lockTime) != null) {
+				try {
+					result = point.proceed(args);
+				} finally {
+					// 方法执行完释放锁
+					jedis.del(redisKey);
+				}
+			} else {
+                // 没有获取到reids lock 返回异常
+                LOGGER.error(CommonErrors.USER_METHOD_LOCKED_ERROR.getReason() + "\ntarget    : {}\nin        : {}\nlockedKey : {}", point.getSignature().toLongString(), JSON.toJSONString(args), redisKey);
+                Class<? extends Throwable> throwed = redisLockCache.throwed();
+                throw (Exception) throwed.getConstructor(Errors.class).newInstance(new Object[]{CommonErrors.USER_METHOD_LOCKED_ERROR});
+            }
+        } else {
+            result = point.proceed(args);
+        }
+        return result;
+    }
+
+
+trade防止重复下单
+
+

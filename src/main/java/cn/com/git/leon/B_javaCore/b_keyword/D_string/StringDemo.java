@@ -23,6 +23,13 @@ public class StringDemo {
         System.out.println(str3 == str4);
         System.out.println(str4 == str5);
         System.out.println(str5 == str6);
+        System.out.println("-----------------------");
+        String str7 = "e";
+        String str8 = "f";
+        String str9 = "ef";
+        String str10 = str7 + str8;
+        System.out.println(str9 == str10);
+        System.out.println(str9 == "e"+"f");
     }
 
 }

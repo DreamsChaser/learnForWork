@@ -23,5 +23,10 @@ public class AutoBoxing {
         Boolean b1 = true;
         Boolean b2 = true;
         System.out.println(b1 == b2);
+        System.out.println("--------------------");
+        Integer c = 130;
+        Integer d = 20;
+        Integer e = 150;
+        System.out.println(e==(c+d));
     }
 }

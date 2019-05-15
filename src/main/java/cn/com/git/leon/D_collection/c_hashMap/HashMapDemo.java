@@ -66,12 +66,10 @@ public class HashMapDemo {
 //        hashMap.put(5,5);
 //        hashMap.put(7,7);
 //        System.out.println(hashMap);
-        HashMap hashMap = new HashMap();
-        hashMap.put("天","天");
-        hashMap.put("地","地");
-        for (Object key : hashMap.keySet()){
-            System.out.println(key);
-        }
+        HashMap hashMap = new HashMap(2);
+        hashMap.put(3,"3");
+        hashMap.put(5,"5");
+        hashMap.put(7,"7");
 
     }
 }

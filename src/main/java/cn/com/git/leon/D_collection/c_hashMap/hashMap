@@ -69,3 +69,11 @@ do {
 6、其它特性
 键和值都可以为空（建为空是k=0）
 ConcurrentModifyException
+
+hashMap多线程问题
+1、数据丢失
+if ((e = oldTab[j]) != null) {
+    oldTab[j] = null;
+}
+2、死循环问题
+1.7头插法会有

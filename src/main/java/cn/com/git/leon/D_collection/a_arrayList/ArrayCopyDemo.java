@@ -19,6 +19,7 @@ public class ArrayCopyDemo {
         System.out.println(peoples[0]);
         System.out.println(peopleClone[0]);
         //--------------------------------------
+        System.out.println("------------------------");
         People[] peopleArraycopy = new People[1];
         System.arraycopy(peoples,0,peopleArraycopy,0,1);
         System.out.println(peoples[0]);

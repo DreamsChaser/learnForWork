@@ -7,9 +7,11 @@ package cn.com.git.leon.N_project;
 public class Project {
     public static void main(String[] args) {
         //第二种情况
-        String s3 = new String("1") + new String("1");
-        String s5 = s3.intern();
-        String s4 = "11";
-        System.out.println(s3 == s4);
+        String temp = "hh";
+        String s1 = "a" + temp;
+        String s2 = "ahh";
+        String s3 = "hh";
+        System.out.println(s1 == s2);
+        System.out.println(temp == s3);
     }
 }

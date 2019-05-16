@@ -15,7 +15,7 @@ public class InitializationDifference {
             Class.forName("cn.com.git.leon.A_jvm.d_classLoader.Father");
             System.out.println("------------------------");
             Father father = new Father();
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

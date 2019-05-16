@@ -1,0 +1,15 @@
+error
+程序发生不可控的错误
+
+exception
+
+runtimeException
+ClassCastException
+NullPointException
+IndexOutOfBounds
+
+checkedException
+编译会报错，必须显示处理的异常
+ClassNotFoundException
+IOException
+NoSuchMethodException

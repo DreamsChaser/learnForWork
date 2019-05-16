@@ -10,9 +10,10 @@ hash
 如果我随即存取 那么我最坏的情况下 得从头到尾遍历，
 如果我通过hashCode%length直接得到索引位置
 
-1、覆盖hashCode没有覆盖equals
-java规定两个equals相等的两个对象 他们的hashCode一定要相等
-因为例如在集合hashSet中通过hashCode定位位置
-如果几个相同的对象有不同的hashCode值意味着在 hashSet中不一样的位置的值相同这与hashSet唯一性违背了
-2、覆盖equals而没有覆盖hashCode
-会使hash碰撞的几率提升 影响性能
+1、覆盖equals没有覆盖hashCode
+导致equals相等的两个对象hashCode值不一样
+这会导致在例如HashSet中不一样的位置(hash值不一致)存放了相同的对象 于规定违背
+
+2、覆盖hashCode没有覆盖equals
+导致hashCode值相同的对象 equals不一致
+会发生hash碰撞 影响性能

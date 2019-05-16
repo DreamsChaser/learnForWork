@@ -49,4 +49,16 @@ public class ReflectData extends ReflectDataFather{
     public void setProtectedField(String protectedField) {
         this.protectedField = protectedField;
     }
+
+    public ReflectData() {
+    }
+
+    public ReflectData(String publicField) {
+        this.publicField = publicField;
+    }
+
+    public ReflectData(String publicField, String defaultField) {
+        this.publicField = publicField;
+        this.defaultField = defaultField;
+    }
 }

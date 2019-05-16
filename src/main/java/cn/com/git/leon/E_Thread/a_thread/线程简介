@@ -68,3 +68,9 @@ synchronized是不可中断锁(阻塞) lock可中断
 判断对象是否获得锁
 java.lang.Thread中有一个方法叫holdsLock()，它返回true如果当且仅当当前线程拥有某个具体对象的锁
 
+ThreadLocal
+ThreadLocal的作用是提供线程内的局部变量，
+这种变量在线程的生命周期内起作用，减少同一个线程内多个函数或者组件之间一些公共变量的传递的复杂度。
+(用户登录信息登)
+
+

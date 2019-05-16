@@ -64,3 +64,7 @@ synchronized是不可中断锁(阻塞) lock可中断
 2、使用原子类
 3、volatile
 4、线程安全类和不变类
+
+判断对象是否获得锁
+java.lang.Thread中有一个方法叫holdsLock()，它返回true如果当且仅当当前线程拥有某个具体对象的锁
+

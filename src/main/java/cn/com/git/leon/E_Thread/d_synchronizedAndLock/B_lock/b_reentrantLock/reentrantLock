@@ -12,11 +12,14 @@ public final void acquire(int arg) {
         acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
         selfInterrupt();
 }
-尝试获取一次锁失败则添加FIFO等待队列
+尝试获取一次锁失败则添加FIFO等待队列（循环cas）
 addWaiter:
     先创建一个当前线程的Node，模式为独占模式（因为传入的mode是一个NULL），
     再判断一下队列上有没有节点，没有就创建一个队列，因此走enq方法：
+acquireQueued
+    自旋，死循环当且仅当p为头结点才尝试获取同步状态（先进先出）
 
+tryLock()直接抛出中断异常 移除同步队列
 
 unlock():
     sync.release(1);

@@ -28,11 +28,11 @@ public class CyclicBarrierDemo {
         }
         executorService.shutdown();
         System.out.println("我好了，下一轮吧");
-//        try {
-//            TimeUnit.SECONDS.sleep(20);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            TimeUnit.SECONDS.sleep(15);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         ExecutorService executorService2 = Executors.newFixedThreadPool(10);
         for (int i =0;i<10;i++) {
             executorService2.submit(() -> {

@@ -8,3 +8,8 @@ cyclicBarrier.await();
 主线程不会被挂起
 
 可以复用
+
+底层使用reentrantLock和condition
+调用cyclicBarrier.await()时判断--count == 0
+不是0则调用condition.await()阻塞线程
+如果等于0 则调用condition.signalAll唤醒所有线程并且把count置为parties

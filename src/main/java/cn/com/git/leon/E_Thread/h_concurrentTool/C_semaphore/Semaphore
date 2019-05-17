@@ -7,3 +7,6 @@ Semaphore可以控同时访问的线程个数，通过 acquire() 获取一个许
 只有使用完了，其他工人才能继续使用
 
 如果不获取直接释放会使Semaphore中的permits+1
+
+acquire(n) 死循环-n后cas设置state <0时失败加入同步队列
+release(n) 死循环+n后cas设置state 唤醒队列

@@ -33,7 +33,7 @@ public class MemberInnerClass {
     }
 
     public void outMethod() {
-//        System.out.println(publicStr2);
+        System.out.println(new MemberInner().publicStr2);
         PrivateMemberInner privateMemberInner = new PrivateMemberInner();
         System.out.println(privateMemberInner.name);
     }

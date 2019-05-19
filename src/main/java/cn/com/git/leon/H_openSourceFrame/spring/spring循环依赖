@@ -1,0 +1,5 @@
+    spring三级缓存
+    singletonFactories ： 单例对象工厂的cache
+    earlySingletonObjects ：提前暴光的单例对象的Cache
+    singletonObjects：单例对象的cache
+    对象创建之后初始化之后会存放在缓存中。依赖对象初始化的时候可以直接引用

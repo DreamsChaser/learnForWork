@@ -1,0 +1,1 @@
+在bean中一般不定义实例变量 而是使用ThreadLocal处理

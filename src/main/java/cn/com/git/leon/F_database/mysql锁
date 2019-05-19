@@ -1,0 +1,7 @@
+间隙锁
+保证某个间隙内的数据在锁定情况下不会发生任何变化
+当使用唯一索引来搜索唯一行的语句时，不需要间隙锁定
+语句中id列没有建立索引或者是非唯一索引时、有多个查询条件也是会有间隙锁的
+MySQL行级锁
+    共享 SELECT `id` FROM  table WHERE　id in(1,2)   LOCK IN SHARE MODE
+    排他SELECT `id` FROM  table WHERE id=1 FOR UPDATE

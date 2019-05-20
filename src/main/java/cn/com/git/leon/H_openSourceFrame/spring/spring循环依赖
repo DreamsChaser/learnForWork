@@ -1,5 +1,13 @@
+只能解决Bean单例模式下非构造函数的循环依赖。
+
+第一级缓存singletonObjects里面放置的是实例化好的单例对象。
+第二级earlySingletonObjects里面存放的是提前曝光的单例对象（没有完全装配好）。
+第三级singletonFactories里面存放的是要被实例化的对象的对象工厂
+
     spring三级缓存
     singletonFactories ： 单例对象工厂的cache
     earlySingletonObjects ：提前暴光的单例对象的Cache
     singletonObjects：单例对象的cache
+
+
     对象创建之后初始化之后会存放在缓存中。依赖对象初始化的时候可以直接引用

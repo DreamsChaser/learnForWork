@@ -13,7 +13,7 @@ import java.util.List;
 public class UserTagCount {
     public static void main(String[] args) {
         //1+4+8+16+32   1男 2女 4程序员 8脱发 16没钱 32单身
-        int val1 = 51;
+        int val1 = 61;
         //1 4 32
         int val2 = 37;
         //2 16 32

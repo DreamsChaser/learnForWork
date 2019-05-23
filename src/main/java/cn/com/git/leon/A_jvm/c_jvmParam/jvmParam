@@ -4,6 +4,7 @@
 -XX:+HeapDumpOnOutOfMemoryError 让JVM在发生内存溢出时自动的生成堆内存快照
 -XX:newSize 表示新生代初始内存的大小(eden+from+to)
 -XX:MaxNewSize 年轻代最大值
+-XX:OldSize 老年代大小
 -XX:MaxTenuringThreshold 设置垃圾最大年龄。如果设置为0的话，则年轻代对象不经过Survivor区，直接进入年老代。对于年老代比较多的应用，可以提高效率。如果将此值设置为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象再年轻代的存活时间，增加在年轻代即被回收的概率
 -XX:-UseBiasedLocking禁用偏向锁
 -server -XX:+DoEscapeAnalysis  逃逸分析

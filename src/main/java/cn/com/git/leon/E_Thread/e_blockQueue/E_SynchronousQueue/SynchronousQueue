@@ -1,2 +1,5 @@
 无缓冲的等待队列
 无锁算法 — 扩展的“Dual stack and Dual queue”算法
+
+没有数据缓冲的BlockingQueue
+队列中为空是才能put负责阻塞，队列中有值时才能take否则阻塞

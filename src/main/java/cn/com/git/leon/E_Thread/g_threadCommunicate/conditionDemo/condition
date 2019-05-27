@@ -1,3 +1,17 @@
 condition是用于lock的线程间通信(必须在Lock与unlock之间)
 await 类似于 object.wait()
 signal 类似于 object.signal()
+
+Condition的具体实现类是AQS的内部类ConditionObject
+每个Condition都对应着一个等待队列（单链表）
+等待队列中结点的状态只有两种即CANCELLED和CONDITION，前者表示线程已结束需要从等待队列中移除，后者表示条件结点等待被唤醒。
+
+await()
+await()方法主要做了3件事，
+一是调用addConditionWaiter()方法将当前线程封装成node结点加入等待队列，
+二是调用fullyRelease(node)方法释放同步状态并唤醒后继结点的线程。
+三是调用isOnSyncQueue(node)方法判断结点是否在同步队列中，注意是个while循环，如果同步队列中没有该结点就直接挂起该线程，需要明白的是如果线程被唤醒后就调用acquireQueued(node, savedState)执行自旋操作争取锁，即当前线程结点从等待队列转移到同步队列并开始努力获取锁。
+signal()方法做了两件事，
+一是判断当前线程是否持有独占锁，没有就抛出异常，从这点也可以看出只有独占模式先采用等待队列，而共享模式下是没有等待队列的，也就没法使用Condition。
+二是唤醒等待队列的第一个结点，即执行doSignal(first)
+先判断当前线程是否持有独占锁，如果有，那么唤醒当前Condition对象中等待队列的第一个结点的线程，并从等待队列中移除该结点，移动到同步队列中，如果加入同步队列失败，那么继续循环唤醒等待队列中的其他结点的线程，如果成功加入同步队列，那么如果其前驱结点是否已结束或者设置前驱节点状态为Node.SIGNAL状态失败，则通过LockSupport.unpark()唤醒被通知节点代表的线程，到此signal()任务完成

@@ -1,0 +1,30 @@
+一面：
+1、你在项目中扮演的角色
+2、完成了那些拿得出手的
+3、接口访问量
+
+java基础
+1、jvm内存模型
+2、gc、回收策略
+3、== equals hashcode
+4、stringBuffer/stringBuilder
+5、hashmap内部结构、concurrenthashmap
+6、sychronize和lock
+7、四种引用
+8、内存溢出
+9、设计模式
+10、spring bean生命周期 @autowired@resource区别 @autowired两种方式，如何在一个util类中注入属性（util类标位@component，applicationContext.getBean()）
+在一个组件的静态方法中调用注入的属性？
+在类A中定义static变量A a 然后在@postConstruct init方法中a=this a.b = this.b 然后在静态方法中通过a.b来方法
+
+11、redis 数据结构、缓存策略、回收策略
+
+第二次：
+分布式场景 集群
+    1. 分布式是指将一个业务拆分不同的子业务，分布在不同的机器上执行。
+    2. 集群是指多台服务器集中在一起，实现同一业务，可以视为一台计算机。
+我在电脑端调用服务 集群上的机器是怎样运作的？
+
+full gc太长 如何排查
+序列化和反序列化
+为什么在修改数据后不是直接插入redis，只是清楚而是有查询的时候重新刷新缓存？

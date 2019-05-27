@@ -1,0 +1,5 @@
+1、项目中你做的出色的 （工厂模式那边的更好解决方案 工厂中的出现大量if else优化）
+2、arraylist(扩容) hashmap linkedHashList保证有序 hashset concurrentHahsmap
+3、synchronized和优化
+4、gc算法
+5、conrrent包下相关内容

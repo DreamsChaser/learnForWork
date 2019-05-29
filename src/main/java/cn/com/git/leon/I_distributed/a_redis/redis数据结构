@@ -20,5 +20,8 @@ Set Set 是 String 类型的无序集合。集合成员是唯一的，这就意�
 2、	SDIFF key1 [key2] 返回给定所有集合的差集
 3、 SINTER key1 [key2] 返回给定所有集合的交集
 4、 SUNION key1 [key2] 返回所有给定集合的并集
+5、 SREM key member1 member2 删除
 SortSet
+ZADD
+zrem
 

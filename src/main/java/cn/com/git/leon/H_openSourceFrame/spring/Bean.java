@@ -1,6 +1,9 @@
 package cn.com.git.leon.H_openSourceFrame.spring;
 
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author sirius

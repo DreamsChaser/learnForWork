@@ -1,7 +1,6 @@
 package cn.com.git.leon.N_project;
 
 import java.io.File;
-import java.util.stream.Collectors;
 
 /**
  * @author sirius
@@ -12,10 +11,10 @@ public class Project {
     private static int count = 0;
 
     public static void main(String[] args) {
-        String str = "D:\\workspace\\learnForWork\\src\\main\\java\\cn\\com\\git\\leon";
+        String str = "C:\\Users\\shinco\\Desktop\\test\\leon";
         File file = new File(str);
-//        test(file);
-        countFiles(file);
+        test(file);
+//        countFiles(file);
         System.out.println(count);
     }
 

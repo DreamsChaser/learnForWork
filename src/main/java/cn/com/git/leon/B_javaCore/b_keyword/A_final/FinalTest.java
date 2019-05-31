@@ -8,9 +8,11 @@ public class FinalTest {
 
     private final String STR = "final";
 
+    private static final String STR2 = "static final";
+
     private String str;
 
     public void test(){
-        System.out.println(STR+str);
+        System.out.println(STR+str+STR2);
     }
 }

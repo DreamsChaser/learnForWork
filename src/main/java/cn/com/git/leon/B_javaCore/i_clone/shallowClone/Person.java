@@ -47,6 +47,13 @@ public class Person implements Cloneable{
         this.company = company;
     }
 
+    public Person() {
+    }
+
+    public Person(String name) {
+        this.name = name;
+    }
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
